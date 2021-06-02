@@ -1,16 +1,38 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa&family=Roboto&display=swap");
+
+@layer base {
+  body {
+    @apply bg-[#06202A] text-gray-300;
+  }
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+@layer components {
+  .link {
+    @apply hover:underline cursor-pointer;
+  }
+  .noscrollbar::-webkit-scrollbar {
+    display: none;
+  }
 
-* {
-  box-sizing: border-box;
+  .about_card {
+    position: relative;
+    animation: 1s linear forwards fadeIn;
+    transition: cubic-bezier(0.075, 0.8, 0.165, 1);
+  }
+  @keyframes fadeIn {
+    from {
+      right: 100vw;
+    }
+    to {
+      right: 0;
+    }
+  }
+
+  .orderCard:hover .orderCard_overlay {
+    opacity: 1;
+  }
 }
