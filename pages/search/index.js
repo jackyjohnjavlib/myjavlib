@@ -10,6 +10,7 @@ function index() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
+  const [searchCode, setSearchCode] = useState(true);
 
   const [searchPublisher, setSearchPublisher] = useState(false);
   const [searchActress, setSearchActress] = useState(false);
@@ -25,13 +26,97 @@ function index() {
     );
   };
 
-  useEffect(() => {
+  const handleSearchPublisher = (e) => {
+    setSearchTerm(e.target.value);
+
     setSearchResults(
       javlibData.filter((collection) =>
-        collection.code.includes(searchTerm.toLocaleUpperCase())
+        collection.publisher.includes(searchTerm.toLocaleUpperCase())
       )
     );
-  }, [searchTerm, javlibData]);
+  };
+
+  const handleSearchActress = (e) => {
+    setSearchTerm(e.target.value);
+
+    setSearchResults(
+      javlibData.filter((collection) => collection.name.includes(searchTerm))
+    );
+  };
+
+  const handleSearchKeywords = (e) => {
+    setSearchTerm(e.target.value);
+
+    setSearchResults(
+      javlibData.filter((collection) =>
+        collection.keywords.includes(searchTerm)
+      )
+    );
+  };
+
+  useEffect(() => {
+    if (searchCode === true) {
+      setSearchResults(
+        javlibData.filter((collection) =>
+          collection.code.includes(searchTerm.toLocaleUpperCase())
+        )
+      );
+    }
+    if (searchPublisher === true) {
+      setSearchResults(
+        javlibData.filter((collection) =>
+          collection.publisher.includes(searchTerm.toLocaleUpperCase())
+        )
+      );
+    }
+    if (searchActress === true) {
+      setSearchResults(
+        javlibData.filter((collection) => collection.name.includes(searchTerm))
+      );
+    }
+    if (searchKeywords === true) {
+      setSearchResults(
+        javlibData.filter((collection) =>
+          collection.keywords.includes(searchTerm)
+        )
+      );
+    }
+  }, [
+    searchTerm,
+    searchKeywords,
+    searchActress,
+    searchPublisher,
+    searchCode,
+    javlibData,
+  ]);
+
+  const toggleSCode = () => {
+    setSearchCode(true);
+    setSearchPublisher(false);
+    setSearchActress(false);
+    setSearchKeywords(false);
+  };
+
+  const toggleSPublisher = () => {
+    setSearchPublisher(true);
+    setSearchCode(false);
+    setSearchActress(false);
+    setSearchKeywords(false);
+  };
+
+  const toggleSActress = () => {
+    setSearchActress(true);
+    setSearchPublisher(false);
+    setSearchCode(false);
+    setSearchKeywords(false);
+  };
+
+  const toggleSKeywords = () => {
+    setSearchKeywords(true);
+    setSearchActress(false);
+    setSearchPublisher(false);
+    setSearchCode(false);
+  };
 
   return (
     <div>
@@ -44,23 +129,85 @@ function index() {
         <div className=" cursor-pointer" onClick={() => router.push("/")}>
           <h1 className="text-lg">My JavLib</h1>
         </div>
-        <div className=" hidden sm:flex relative items-center rounded-md h-10 flex-grow cursor-pointer">
+        <div className="flex relative items-center rounded-md h-10 flex-grow cursor-pointer"></div>
+        {searchCode && (
           <input
             className={` font-bold tracking-widest bg-gradient-to-l text-gray-800 from-[#06202A] p-2 px-5 h-full w-full flex-grow rounded flex-shrink rounded-l-md focus:outline-none
              `}
             value={searchTerm}
             onChange={handleSearch}
+            placeholder="Search by Code"
           />
-        </div>
+        )}
+        {searchPublisher && (
+          <input
+            className={` font-bold tracking-widest bg-gradient-to-l text-gray-800 from-[#06202A] p-2 px-5 h-full w-full flex-grow rounded flex-shrink rounded-l-md focus:outline-none
+             `}
+            value={searchTerm}
+            onChange={handleSearchPublisher}
+            placeholder="Search by Publisher"
+          />
+        )}
+        {searchActress && (
+          <input
+            className={` font-bold tracking-widest bg-gradient-to-l text-gray-800 from-[#06202A] p-2 px-5 h-full w-full flex-grow rounded flex-shrink rounded-l-md focus:outline-none
+             `}
+            value={searchTerm}
+            onChange={handleSearchActress}
+            placeholder="Search by Actress"
+          />
+        )}
+        {searchKeywords && (
+          <input
+            className={` font-bold tracking-widest bg-gradient-to-l text-gray-800 from-[#06202A] p-2 px-5 h-full w-full flex-grow rounded flex-shrink rounded-l-md focus:outline-none
+             `}
+            value={searchTerm}
+            onChange={handleSearchKeywords}
+            placeholder="Search by Keywords"
+          />
+        )}
+      </div>
+      <div className="pt-4 flex items-center space-x-4 justify-center">
         <div className="flex space-x-6 outline-none">
           <div
-            onClick={() => router.push("/filter")}
-            className="w-full outline-none hover:bg-gray-500 p-4 rounded-2xl cursor-pointer"
+            onClick={toggleSCode}
+            className={`w-full outline-none hover:bg-gray-500 p-4 rounded-2xl cursor-pointer ${
+              searchCode ? "bg-gray-500" : ""
+            }`}
           >
-            Filter
+            <h3 className={`${searchCode ? "font-bold" : "font-normal"}`}>
+              Code
+            </h3>
           </div>
-          <div className="w-full outline-none    hover:bg-gray-500 p-4 rounded-2xl cursor-pointer">
-            Add
+          <div
+            onClick={toggleSPublisher}
+            className={`w-full outline-none    hover:bg-gray-500 p-4 rounded-2xl cursor-pointer ${
+              searchPublisher ? "bg-gray-500" : ""
+            } `}
+          >
+            <h3 className={`${searchPublisher ? "font-bold" : "font-normal"}`}>
+              Publisher
+            </h3>
+          </div>
+          <div
+            onClick={toggleSActress}
+            className={`w-full outline-none    hover:bg-gray-500 p-4 rounded-2xl cursor-pointer ${
+              searchActress ? "bg-gray-500" : ""
+            } `}
+          >
+            <h3 className={`${searchActress ? "font-bold" : "font-normal"}`}>
+              Actress
+            </h3>
+          </div>
+          <div
+            onClick={toggleSKeywords}
+            className={`w-full outline-none    hover:bg-gray-500 p-4 rounded-2xl cursor-pointer ${
+              searchKeywords ? "bg-gray-500" : ""
+            } `}
+          >
+            <h3 className={`${searchKeywords ? "font-bold" : "font-normal"}`}>
+              Keywords
+            </h3>
           </div>
         </div>
       </div>

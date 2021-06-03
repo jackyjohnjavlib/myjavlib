@@ -8,7 +8,6 @@ import {
 } from "../../features/movieSlice";
 import ResultList from "../../components/ResultList";
 import Header from "../../components/Header";
-import db from "../../config/firebase";
 import Head from "next/head";
 import Link from "next/link";
 import { getUniqueValues } from "../../utils/helpers";

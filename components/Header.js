@@ -31,8 +31,6 @@ function Header({ collections }) {
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
 
-  console.log("collections", collections);
-
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
     setSearchResults(
@@ -48,11 +46,27 @@ function Header({ collections }) {
   };
 
   return (
-    <div className="flex items-center p-4 space-x-10 sticky top-0 z-50 shadow-lg">
-      <div className=" cursor-pointer" onClick={() => router.push("/")}>
-        <h1 className="text-lg">My JavLib</h1>
+    <div className="flex flex-col items-center sticky top-0 z-50 shadow-lg">
+      <div className="flex items-center space-x-6">
+        <div className=" cursor-pointer" onClick={() => router.push("/")}>
+          <h1 className="text-lg">My JavLib</h1>
+        </div>
+        <div className="flex space-x-6 outline-none">
+          <div
+            onClick={() => router.push("/filter")}
+            className="w-full outline-none hover:bg-gray-500 p-4 rounded-2xl cursor-pointer"
+          >
+            Filter
+          </div>
+          <div
+            onClick={() => router.push("/search")}
+            className="w-full outline-none    hover:bg-gray-500 p-4 rounded-2xl cursor-pointer"
+          >
+            Search
+          </div>
+        </div>
       </div>
-      <div className=" hidden sm:flex relative items-center rounded-md h-10 flex-grow cursor-pointer  bg-yellow-400  hover:bg-yellow-500">
+      <div className="w-full flex relative items-center rounded-md h-10 flex-grow cursor-pointer  bg-yellow-400  hover:bg-yellow-500">
         <input
           onMouseOver={() => setShowResults(true)}
           onBlur={() => setShowResults(false)}
@@ -60,8 +74,8 @@ function Header({ collections }) {
           value={searchTerm}
           onChange={handleSearch}
           placeholder="Search anything you need... (Live Search by Filter)"
-          className={`text-black p-2 px-5 h-full width-6 flex-grow rounded flex-shrink rounded-l-md focus:outline-none
-         `}
+          className={` font-bold tracking-widest bg-gradient-to-l text-gray-800 from-[#06202A] p-2 px-5 h-full w-full flex-grow rounded flex-shrink rounded-l-md focus:outline-none
+          `}
           type="text"
         />
         {showResults && (
@@ -100,20 +114,6 @@ function Header({ collections }) {
             )}
           </div>
         )}
-      </div>
-      <div className="flex space-x-6 outline-none">
-        <div
-          onClick={() => router.push("/filter")}
-          className="w-full outline-none hover:bg-gray-500 p-4 rounded-2xl cursor-pointer"
-        >
-          Filter
-        </div>
-        <div
-          onClick={() => router.push("/search")}
-          className="w-full outline-none    hover:bg-gray-500 p-4 rounded-2xl cursor-pointer"
-        >
-          Search
-        </div>
       </div>
     </div>
   );
