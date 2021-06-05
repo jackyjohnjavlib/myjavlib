@@ -64,6 +64,12 @@ function Header({ collections }) {
           >
             Search
           </div>
+          <div
+            onClick={() => router.push("/website")}
+            className="w-full outline-none    hover:bg-gray-500 p-4 rounded-2xl cursor-pointer"
+          >
+            Website
+          </div>
         </div>
       </div>
       <div className="w-full flex relative items-center rounded-md h-10 flex-grow cursor-pointer  bg-yellow-400  hover:bg-yellow-500">

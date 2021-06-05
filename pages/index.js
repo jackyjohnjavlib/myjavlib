@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addMovie } from "../features/movieSlice";
 
 import javlibData from "../config/javlibData.json";
-import Respose from "../config/Response";
 
 export default function Home(results) {
   const dispatch = useDispatch();

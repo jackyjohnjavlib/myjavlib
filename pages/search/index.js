@@ -49,7 +49,7 @@ function index() {
 
     setSearchResults(
       javlibData.filter((collection) =>
-        collection.keywords.includes(searchTerm)
+        collection.keywords.includes(searchTerm.toString())
       )
     );
   };
@@ -77,7 +77,7 @@ function index() {
     if (searchKeywords === true) {
       setSearchResults(
         javlibData.filter((collection) =>
-          collection.keywords.includes(searchTerm)
+          collection.keywords.includes(searchTerm.slice(0, 4))
         )
       );
     }
