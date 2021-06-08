@@ -9,6 +9,19 @@ import { useDispatch } from "react-redux";
 import { navDetail } from "../features/movieSlice";
 import SearchList from "./SearchList";
 
+import HeaderItems from "./HeaderItems";
+import {
+  AdjustmentsIcon,
+  BadgeCheckIcon,
+  CollectionIcon,
+  FireIcon,
+  GlobeAltIcon,
+  HomeIcon,
+  LightningBoltIcon,
+  SearchIcon,
+  UserIcon,
+} from "@heroicons/react/outline";
+
 /*const addfile = (e) => {
   e.preventDefault();
   const id = moment(new Date()).format("MMMM Do YYYY, h:mm:ss a");
@@ -40,36 +53,48 @@ function Header({ collections }) {
     );
   };
 
-  const navToDetails = () => {
-    dispatch(navDetail({ id, code, image, name, title, publisher, keywords }));
-    router.push(`/details/${id}`);
+  const navtoHome = () => {
+    router.push("/");
+  };
+
+  const navtosearch = () => {
+    router.push("/search");
+  };
+
+  const navtofilter = () => {
+    router.push("/filter");
+  };
+
+  const navtowebsite = () => {
+    router.push("/website");
+  };
+
+  const navtoRank = () => {
+    router.push("/rank");
   };
 
   return (
-    <div className="flex flex-col items-center sticky top-0 z-50 shadow-lg">
+    <div className="flex flex-col items-center sticky top-0 z-50 shadow-lg h-auto m-5">
       <div className="flex items-center space-x-6">
-        <div className=" cursor-pointer" onClick={() => router.push("/")}>
-          <h1 className="text-lg">My JavLib</h1>
-        </div>
-        <div className="flex space-x-6 outline-none">
-          <div
-            onClick={() => router.push("/filter")}
-            className="w-full outline-none hover:bg-gray-500 p-4 rounded-2xl cursor-pointer"
-          >
-            Filter
-          </div>
-          <div
-            onClick={() => router.push("/search")}
-            className="w-full outline-none    hover:bg-gray-500 p-4 rounded-2xl cursor-pointer"
-          >
-            Search
-          </div>
-          <div
-            onClick={() => router.push("/website")}
-            className="w-full outline-none    hover:bg-gray-500 p-4 rounded-2xl cursor-pointer"
-          >
-            Website
-          </div>
+        <div className="flex flex-grow justify-evenly max-w-2xl">
+          <HeaderItems title="HOME" Icon={HomeIcon} navtoHome={navtoHome} />
+          <HeaderItems
+            title="FILTER"
+            Icon={AdjustmentsIcon}
+            navtosearch={navtofilter}
+          />
+          <HeaderItems
+            title="SEARCH"
+            Icon={SearchIcon}
+            navtosearch={navtosearch}
+          />
+          <HeaderItems
+            title="WEBSITE"
+            Icon={GlobeAltIcon}
+            navtosearch={navtowebsite}
+          />
+
+          <HeaderItems title="RANK" Icon={FireIcon} navtosearch={navtoRank} />
         </div>
       </div>
       <div className="w-full flex relative items-center rounded-md h-10 flex-grow cursor-pointer  bg-yellow-400  hover:bg-yellow-500">
