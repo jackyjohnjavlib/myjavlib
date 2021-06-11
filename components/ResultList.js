@@ -2,9 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { navDetail } from "../features/movieSlice";
+
+import { navDetail, selectMovie, updateFilter } from "../features/movieSlice";
 import Fade from "react-reveal/Fade";
+import { useDispatch, useSelector } from "react-redux";
 
 function ResultList({ id, code, image, name, title, publisher, keywords }) {
   const router = useRouter();
@@ -40,7 +41,9 @@ function ResultList({ id, code, image, name, title, publisher, keywords }) {
               <div className="space-x-4  my-1 grid grid-flow-row-dense grid-cols-3 xl:grid-cols-4">
                 {name.map((name) => (
                   <div>
-                    <h1 className="">{name}</h1>
+                    <h1 onClick={() => filterCategory(name)} className="">
+                      {name}
+                    </h1>
                   </div>
                 ))}
               </div>

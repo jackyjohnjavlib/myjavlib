@@ -30,37 +30,7 @@ function index({ collections }) {
 
   const publisher = all_movie ? getUniqueValues(all_movie, "publisher") : null;
   const name = all_movie ? getUniqueValues(all_movie, "name") : null;
-
   const keywords = all_movie ? getUniqueValues(all_movie, "keywords") : null;
-
-  const reFilter = (products, dont) => {
-    const items = ["publisher", "name", "keywords"];
-    let filtered = movies;
-    movies
-      .filter((item) => item !== dont)
-      .map((item) => {
-        if (
-          item !== "keywords" &&
-          item !== "name" &&
-          activeCategory !== "all"
-        ) {
-          filtered = items.filter((movie) => movie[item] === activePublisher);
-        } else if (
-          item !== "publisher" &&
-          item !== "name" &&
-          activeColor !== "all"
-        ) {
-          filtered = items.filter((movie) => movie[item] === activeKeyword);
-        } else if (
-          item !== "publisher" &&
-          item !== "keywords" &&
-          activeCompany !== "all"
-        ) {
-          filtered = items.filter((movie) => movie[item] === activeName);
-        }
-      });
-    return filtered;
-  };
 
   /*const filterCategory = (value, item) => {
     setShowClear(true);
@@ -96,19 +66,24 @@ function index({ collections }) {
     }
     if (item === "name") {
       setActiveName(value);
-      setLastChange("name");
+      //setLastChange("name");
+      const filtered =
+        value !== "all"
+          ? all_movie.filter((movie) => movie[item].includes(value))
+          : all_movie;
+      dispatch(updateFilter(filtered));
     }
     if (item === "keywords") {
       setActiveKeyword(value);
-      setLastChange("colors");
+      //setLastChange("colors");
+      const filtered =
+        value !== "all"
+          ? all_movie.filter((movie) => movie[item].includes(value))
+          : all_movie;
+      dispatch(updateFilter(filtered));
     }
-    const filtered =
-      value !== "all"
-        ? all_movie.filter((movie) => movie[item].includes(value))
-        : all_movie;
-    dispatch(updateFilter(filtered));
   };
-
+  /*
   useEffect(() => {
     const items = ["publisher", "name", "keywords"];
     const hello = {
@@ -143,7 +118,41 @@ function index({ collections }) {
       });
       dispatch(updateFilter(filtered));
     }
-  }, [activeKeyword, activeName, activePublisher, lastChange]);
+  }, [activePublisher, lastChange]);*/
+
+  useEffect(() => {
+    const items = ["publisher"];
+    const hello = {
+      publisher: activePublisher,
+    };
+    // const items = ['category', 'company', 'colors']
+    if (all_movie) {
+      let filtered = all_movie;
+
+      if (hello[lastChange] !== "all") {
+        filtered = all_movie.filter(
+          (movie) => movie[lastChange] === hello[lastChange]
+        );
+      } else {
+        items.forEach((x) => {
+          filtered =
+            x == lastChange && hello[x] !== "all"
+              ? filtered.filter((movie) => movie[x] === hello[x])
+              : filtered;
+        });
+      }
+
+      items.forEach((x) => {
+        if (hello[x] !== "all") {
+          filtered =
+            x !== lastChange
+              ? filtered.filter((movie) => movie[x] === hello[x])
+              : filtered;
+        }
+      });
+      dispatch(updateFilter(filtered));
+    }
+  }, [activePublisher, lastChange]);
 
   const clearAllFilters = () => {
     dispatch(clearFilters());
@@ -355,6 +364,7 @@ function index({ collections }) {
                     keywords={collection.keywords}
                     publisher={collection.publisher}
                     {...collection}
+                    filterCategory={filterCategory}
                   />
                 ))}
             </div>
