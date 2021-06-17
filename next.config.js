@@ -21,6 +21,8 @@ module.exports = withImages({
       "www.attackers.net",
       "www.moodyz.com",
       "www.tameikegoro.jp",
+      "image.up-timely.com",
+      "www.premium-beauty.com",
     ],
   },
 });
