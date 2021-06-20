@@ -1,11 +1,84 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
-import { selectDetail } from "../../features/movieSlice";
+import {
+  selectDetail,
+  selectFilter,
+  selectMovie,
+  findSuggest,
+  selectSuggest,
+  updateFilter,
+} from "../../features/movieSlice";
+import javlibData from "../../config/javlibData.json";
+import ResultList from "../../components/ResultList";
+import { useState, useEffect } from "react";
+import { getUniqueValues } from "../../utils/helpers";
 
 function Details() {
+  const dispatch = useDispatch();
   const movies = useSelector(selectDetail);
+  const all_movie = useSelector(selectMovie);
+  const filterMovie = useSelector(selectFilter);
+  const [activeName, setActiveName] = useState("");
+  const [activeKeyword, setActiveKeyword] = useState("all");
+
+  const [searchResults, setSearchResults] = useState([]);
+
+  const [searchTerm, setSearchTerm] = useState(movies.name[0]);
+  const [showSuggest, setShowSuggest] = useState(true);
+
+  const getUniqueName = () => {
+    let unique = movies.name.map((name) => name);
+
+    unique = unique.flat();
+
+    return [...new Set(unique)];
+  };
+
+  const getUniqueKeywords = () => {
+    let unique = movies.keywords.map((name) => name);
+    unique = unique.flat();
+
+    return [...new Set(unique)];
+  };
+
+  const name = all_movie ? getUniqueName() : null;
+
+  const keywords = all_movie ? getUniqueKeywords() : null;
+
+  const filterCategory = (value, item) => {
+    setShowSuggest(false);
+    if (item === "publisher") {
+      setActivePublisher(value);
+      setLastChange("publisher");
+    }
+    if (item === "name") {
+      setActiveName(value);
+      //setLastChange("name");
+      const filtered =
+        value !== "all"
+          ? all_movie.filter((movie) => movie[item].includes(value))
+          : all_movie;
+      dispatch(updateFilter(filtered));
+    }
+    if (item === "keywords") {
+      setActiveKeyword(value);
+      //setLastChange("colors");
+      const filtered =
+        value !== "all"
+          ? all_movie.filter((movie) => movie[item].includes(value))
+          : all_movie;
+      dispatch(updateFilter(filtered));
+    }
+  };
+
+  useEffect(() => {
+    setSearchResults(
+      javlibData.filter((collection) => collection.name.includes(searchTerm))
+    );
+  }, [javlibData]);
+
   return (
     <div>
       <Head>
@@ -16,14 +89,14 @@ function Details() {
       <main className="mx-auto max-w-screen">
         <div className="max-w-screen-xl mx-auto mt-5 ">
           <div className="pt-4">
-            <div className="grid place-items-center">
+            <div className="grid place-items-center p-4">
               {movies.image.map((image) => (
                 <Image
                   className={
                     "w-full rounded-lg cursor-pointer transition duration-300 ease-in transform sm:hover:scale-125"
                   }
-                  width={700}
-                  height={500}
+                  width={1080}
+                  height={720}
                   objectFit="cover"
                   src={image}
                   alt=""
@@ -34,17 +107,77 @@ function Details() {
               <div className=" grid place-items-center  mb-10 w-full">
                 <h1 className="text-2xl">{movies.title}</h1>
                 <div className="place-items-center  mb-10 w-full  my-1 grid grid-flow-row-dense grid-cols-3 xl:grid-cols-4">
-                  {movies.name.map((name) => (
-                    <h1 className="text-xl">{name}</h1>
-                  ))}
+                  {name &&
+                    name.map((value) => (
+                      <div
+                        key={value}
+                        className={`flex items-center justify-center p-2  rounded-2xl w-full cursor-pointer
+                      ${
+                        value == activeName &&
+                        "bg-gray-500 text-white font-bold"
+                      }`}
+                        onClick={() => filterCategory(value, "name")}
+                      >
+                        {value}
+                      </div>
+                    ))}
                 </div>
                 <div className="place-items-center  mb-10 w-full  my-1 grid grid-flow-row-dense grid-cols-3 xl:grid-cols-4">
-                  {movies.keywords.map((keywords) => (
-                    <p className="text-lg italic">{keywords}</p>
-                  ))}
+                  {keywords &&
+                    keywords.map((value) => (
+                      <div
+                        key={value}
+                        className={`flex items-center justify-center p-2  rounded-2xl w-full cursor-pointer
+                      ${
+                        value == activeKeyword &&
+                        "bg-gray-500 text-white font-bold"
+                      }`}
+                        onClick={() => filterCategory(value, "keywords")}
+                      >
+                        {value}
+                      </div>
+                    ))}
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div>
+          <h1 className=" text-center text-2xl lg:text-4xl font-medium">
+            Suggest Movie
+          </h1>
+          <div className="px-5 my-10 grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 ">
+            {showSuggest && searchResults ? (
+              <>
+                {searchResults.map((collection) => (
+                  <ResultList
+                    id={collection.id}
+                    code={collection.code}
+                    image={collection.image}
+                    name={collection.name}
+                    title={collection.title}
+                    keywords={collection.keywords}
+                    publisher={collection.publisher}
+                  />
+                ))}
+              </>
+            ) : (
+              <>
+                {!showSuggest &&
+                  !!filterMovie?.length &&
+                  filterMovie.map((collection) => (
+                    <ResultList
+                      id={collection.id}
+                      code={collection.code}
+                      image={collection.image}
+                      name={collection.name}
+                      title={collection.title}
+                      keywords={collection.keywords}
+                      publisher={collection.publisher}
+                    />
+                  ))}{" "}
+              </>
+            )}
           </div>
         </div>
       </main>

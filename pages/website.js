@@ -9,6 +9,7 @@ import madonnalogo from "../images/madonnalogo.png";
 import attackerslogo from "../images/attackerslogo.png";
 import moodyzlogo from "../images/moodyzlogo.gif";
 import tameikegoro from "../images/taamekalogo.png";
+import premiumlogo from "../images/logo_premium.png";
 
 function website() {
   const webbpage = [
@@ -31,6 +32,11 @@ function website() {
       publisher: "ATTACKERS",
       publisherImg: `${attackerslogo}`,
       url: "https://www.attackers.net/top/",
+    },
+    {
+      publisher: "PREMIUM",
+      publisherImg: `${premiumlogo}`,
+      url: "https://www.premium-beauty.com/top/",
     },
     {
       publisher: "MOODYZ",
@@ -91,6 +97,17 @@ function website() {
             <Link href="https://www.attackers.net/top/">
               <Image
                 src={attackerslogo}
+                height={300}
+                width={300}
+                objectFit="contain"
+                className={` cursor-pointer  transition duration-300 ease-in transform sm:hover:scale-125`}
+              />
+            </Link>
+          </div>
+          <div className="relative flex flex-col m-5 bg-white z-30 p-10 shadow-lg">
+            <Link href="https://www.premium-beauty.com/top/">
+              <Image
+                src={premiumlogo}
                 height={300}
                 width={300}
                 objectFit="contain"

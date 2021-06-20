@@ -6,6 +6,7 @@ export const movieSlice = createSlice({
     movies: null,
     filteredMovies: null,
     details: null,
+    suggestMovie: null,
   },
   reducers: {
     addMovie: (state, action) => {
@@ -21,10 +22,13 @@ export const movieSlice = createSlice({
     navDetail: (state, action) => {
       state.details = action.payload;
     },
+    findSuggest: (state, action) => {
+      state.suggestMovie = action.payload;
+    },
   },
 });
 
-export const { addMovie, updateFilter, clearFilters, navDetail } =
+export const { addMovie, updateFilter, clearFilters, navDetail, findSuggest } =
   movieSlice.actions;
 
 export const selectMovie = (state) => state.movie.movies;
@@ -32,5 +36,7 @@ export const selectMovie = (state) => state.movie.movies;
 export const selectDetail = (state) => state.movie.details;
 
 export const selectFilter = (state) => state.movie.filteredMovies;
+
+export const selectSuggest = (state) => state.movie.suggestMovie;
 
 export default movieSlice.reducer;
