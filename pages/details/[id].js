@@ -55,6 +55,7 @@ function Details() {
     }
     if (item === "name") {
       setActiveName(value);
+      setActiveKeyword("");
       //setLastChange("name");
       const filtered =
         value !== "all"
@@ -63,6 +64,7 @@ function Details() {
       dispatch(updateFilter(filtered));
     }
     if (item === "keywords") {
+      setActiveName("");
       setActiveKeyword(value);
       //setLastChange("colors");
       const filtered =
@@ -175,7 +177,7 @@ function Details() {
                       keywords={collection.keywords}
                       publisher={collection.publisher}
                     />
-                  ))}{" "}
+                  ))}
               </>
             )}
           </div>

@@ -77,7 +77,7 @@ function index() {
     if (searchKeywords === true) {
       setSearchResults(
         javlibData.filter((collection) =>
-          collection.keywords.includes(searchTerm.slice(0, 4))
+          collection.keywords.includes(searchTerm)
         )
       );
     }

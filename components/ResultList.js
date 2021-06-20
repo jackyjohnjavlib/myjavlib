@@ -3,7 +3,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import { navDetail, selectMovie, updateFilter } from "../features/movieSlice";
+import {
+  clearFilters,
+  navDetail,
+  selectMovie,
+  updateFilter,
+} from "../features/movieSlice";
 import Fade from "react-reveal/Fade";
 import { useDispatch, useSelector } from "react-redux";
 

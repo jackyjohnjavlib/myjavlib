@@ -12,6 +12,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { getUniqueValues } from "../../utils/helpers";
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
+import Fade from "react-reveal/Fade";
 
 function index({ collections }) {
   const dispatch = useDispatch();
@@ -213,134 +214,140 @@ function index({ collections }) {
                 </div>
               )}
               {showFilter ? (
-                <div className="h-screen overflow-y-scroll scrollbar-hide">
-                  <div className="flex flex-col p-4 items-center space-y-2 ">
-                    <div className="flex items-center">
-                      <h2 className="p-4 text-center text-base md:text-lg font-medium">
-                        Publisher
-                      </h2>
-                      {showPublisher ? (
-                        <AiOutlineUp
-                          onClick={() => setShowPublisher(false)}
-                          className="w-4 h-4 cursor-pointer"
-                        />
-                      ) : (
-                        <AiOutlineDown
-                          onClick={() => setShowPublisher(true)}
-                          className="w-4 h-4 cursor-pointer"
-                        />
-                      )}
-                    </div>
-                    {showPublisher ? (
-                      <>
-                        <div className=" space-y-4  w-full">
-                          {publisher &&
-                            publisher.map((value) => (
-                              <div
-                                key={value}
-                                className={`flex items-center justify-center p-2  rounded-2xl w-full cursor-pointer
+                <>
+                  <Fade bottom>
+                    <div className="h-screen overflow-y-scroll scrollbar-hide">
+                      <div className="flex flex-col p-4 items-center space-y-2 ">
+                        <div className="flex items-center">
+                          <h2 className="p-4 text-center text-base md:text-lg font-medium">
+                            Publisher
+                          </h2>
+                          {showPublisher ? (
+                            <AiOutlineUp
+                              onClick={() => setShowPublisher(false)}
+                              className="w-4 h-4 cursor-pointer"
+                            />
+                          ) : (
+                            <AiOutlineDown
+                              onClick={() => setShowPublisher(true)}
+                              className="w-4 h-4 cursor-pointer"
+                            />
+                          )}
+                        </div>
+                        {showPublisher ? (
+                          <>
+                            <div className=" space-y-4  w-full">
+                              {publisher &&
+                                publisher.map((value) => (
+                                  <div
+                                    key={value}
+                                    className={`flex items-center justify-center p-2  rounded-2xl w-full cursor-pointer
                       ${
                         value == activePublisher &&
                         "bg-gray-500 text-white font-bold"
                       }`}
-                                onClick={() =>
-                                  filterCategory(value, "publisher")
-                                }
-                              >
-                                {value}
-                              </div>
-                            ))}
+                                    onClick={() =>
+                                      filterCategory(value, "publisher")
+                                    }
+                                  >
+                                    <Fade bottom>{value} </Fade>
+                                  </div>
+                                ))}
+                            </div>
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                      <div className="flex flex-col p-4 items-center space-y-2">
+                        <div className="flex items-center">
+                          <h2 className="p-4 text-center text-base md:text-lg font-medium">
+                            女优
+                          </h2>
+                          {showName ? (
+                            <AiOutlineUp
+                              onClick={() => setShowName(false)}
+                              className="w-4 h-4 cursor-pointer"
+                            />
+                          ) : (
+                            <AiOutlineDown
+                              onClick={() => setShowName(true)}
+                              className="w-4 h-4 cursor-pointer"
+                            />
+                          )}
                         </div>
-                      </>
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                  <div className="flex flex-col p-4 items-center space-y-2">
-                    <div className="flex items-center">
-                      <h2 className="p-4 text-center text-base md:text-lg font-medium">
-                        女优
-                      </h2>
-                      {showName ? (
-                        <AiOutlineUp
-                          onClick={() => setShowName(false)}
-                          className="w-4 h-4 cursor-pointer"
-                        />
-                      ) : (
-                        <AiOutlineDown
-                          onClick={() => setShowName(true)}
-                          className="w-4 h-4 cursor-pointer"
-                        />
-                      )}
-                    </div>
 
-                    <div className="w-full space-y-3">
-                      {showName ? (
-                        <>
-                          {name &&
-                            name.map((value) => (
-                              <div
-                                key={value}
-                                className={`flex items-center justify-center p-2  rounded-2xl w-full cursor-pointer
+                        <div className="w-full space-y-3">
+                          {showName ? (
+                            <>
+                              {name &&
+                                name.map((value) => (
+                                  <div
+                                    key={value}
+                                    className={`flex items-center justify-center p-2  rounded-2xl w-full cursor-pointer
                       ${
                         value == activeName &&
                         "bg-gray-500 text-white font-bold"
                       }`}
-                                onClick={() => filterCategory(value, "name")}
-                              >
-                                {value}
-                              </div>
-                            ))}
-                        </>
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex flex-col p-4 items-center space-y-2">
-                    <div className="flex items-center">
-                      <h2 className="p-4 text-center text-base md:text-lg font-medium">
-                        keywords
-                      </h2>
-                      {showKeywords ? (
-                        <AiOutlineUp
-                          onClick={() => setShowKeywords(false)}
-                          className="w-4 h-4 cursor-pointer"
-                        />
-                      ) : (
-                        <AiOutlineDown
-                          onClick={() => setShowKeywords(true)}
-                          className="w-4 h-4 cursor-pointer"
-                        />
-                      )}
-                    </div>
+                                    onClick={() =>
+                                      filterCategory(value, "name")
+                                    }
+                                  >
+                                    <Fade bottom>{value} </Fade>
+                                  </div>
+                                ))}
+                            </>
+                          ) : (
+                            <></>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex flex-col p-4 items-center space-y-2">
+                        <div className="flex items-center">
+                          <h2 className="p-4 text-center text-base md:text-lg font-medium">
+                            keywords
+                          </h2>
+                          {showKeywords ? (
+                            <AiOutlineUp
+                              onClick={() => setShowKeywords(false)}
+                              className="w-4 h-4 cursor-pointer"
+                            />
+                          ) : (
+                            <AiOutlineDown
+                              onClick={() => setShowKeywords(true)}
+                              className="w-4 h-4 cursor-pointer"
+                            />
+                          )}
+                        </div>
 
-                    <div className="w-full space-y-3">
-                      {showKeywords ? (
-                        <>
-                          {keywords &&
-                            keywords.map((value) => (
-                              <div
-                                key={value}
-                                className={`flex items-center justify-center p-2  rounded-2xl w-full cursor-pointer
+                        <div className="w-full space-y-3">
+                          {showKeywords ? (
+                            <>
+                              {keywords &&
+                                keywords.map((value) => (
+                                  <div
+                                    key={value}
+                                    className={`flex items-center justify-center p-2  rounded-2xl w-full cursor-pointer
                       ${
                         value == activeKeyword &&
                         "bg-gray-500 text-white font-bold"
                       }`}
-                                onClick={() =>
-                                  filterCategory(value, "keywords")
-                                }
-                              >
-                                {value}
-                              </div>
-                            ))}
-                        </>
-                      ) : (
-                        <></>
-                      )}
+                                    onClick={() =>
+                                      filterCategory(value, "keywords")
+                                    }
+                                  >
+                                    <Fade bottom>{value} </Fade>
+                                  </div>
+                                ))}
+                            </>
+                          ) : (
+                            <></>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </Fade>
+                </>
               ) : (
                 <></>
               )}

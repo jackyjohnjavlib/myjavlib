@@ -17,11 +17,13 @@ function SearchList({ id, code, image, name, title, publisher, keywords }) {
   return (
     <>
       <Fade bottom>
-        <div className="p-2 flex items-center space-x-4 hover:bg-gray-800 text-black hover:text-white rounded-3xl">
+        <div
+          onClick={navToDetails}
+          className="p-2 flex items-center space-x-4 hover:bg-gray-800 text-black hover:text-white rounded-3xl"
+        >
           <div>
             {image.map((image) => (
               <Image
-                onClick={navToDetails}
                 layout="fixed"
                 src={image}
                 height="160"
