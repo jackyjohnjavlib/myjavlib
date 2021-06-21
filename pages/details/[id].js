@@ -14,6 +14,8 @@ import javlibData from "../../config/javlibData.json";
 import ResultList from "../../components/ResultList";
 import { useState, useEffect } from "react";
 import { getUniqueValues } from "../../utils/helpers";
+import SuggestList from "../../components/SuggestList";
+import Zoom from "react-reveal/Zoom";
 
 function Details() {
   const dispatch = useDispatch();
@@ -82,108 +84,115 @@ function Details() {
   }, [javlibData]);
 
   return (
-    <div>
-      <Head>
-        <title>Movie | {movies.code}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Header />
-      <main className="mx-auto max-w-screen">
-        <div className="max-w-screen-xl mx-auto mt-5 ">
-          <div className="pt-4">
-            <div className="grid place-items-center p-4">
-              {movies.image.map((image) => (
-                <Image
-                  className={
-                    "w-full rounded-lg cursor-pointer transition duration-300 ease-in transform sm:hover:scale-125"
-                  }
-                  width={1080}
-                  height={720}
-                  objectFit="cover"
-                  src={image}
-                  alt=""
-                />
-              ))}
-            </div>
-            <div>
-              <div className=" grid place-items-center  mb-10 w-full">
-                <h1 className="text-2xl">{movies.title}</h1>
-                <div className="place-items-center  mb-10 w-full  my-1 grid grid-flow-row-dense grid-cols-3 xl:grid-cols-4">
-                  {name &&
-                    name.map((value) => (
-                      <div
-                        key={value}
-                        className={`flex items-center justify-center p-2  rounded-2xl w-full cursor-pointer
-                      ${
-                        value == activeName &&
-                        "bg-gray-500 text-white font-bold"
-                      }`}
-                        onClick={() => filterCategory(value, "name")}
-                      >
-                        {value}
-                      </div>
-                    ))}
+    <>
+      <Zoom bottom>
+        <div>
+          <Head>
+            <title>
+              Movie || {movies.name[0]} || {movies.code}
+            </title>
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+          <Header />
+          <main className="mx-auto max-w-screen">
+            <div className="max-w-screen-xl mx-auto mt-5 ">
+              <div className="pt-4">
+                <div className="grid place-items-center p-4">
+                  {movies.image.map((image) => (
+                    <Image
+                      className={
+                        "w-full rounded-lg cursor-pointer transition duration-300 ease-in transform sm:hover:scale-125"
+                      }
+                      width={1080}
+                      height={720}
+                      objectFit="cover"
+                      src={image}
+                      alt=""
+                    />
+                  ))}
                 </div>
-                <div className="place-items-center  mb-10 w-full  my-1 grid grid-flow-row-dense grid-cols-3 xl:grid-cols-4">
-                  {keywords &&
-                    keywords.map((value) => (
-                      <div
-                        key={value}
-                        className={`flex items-center justify-center p-2  rounded-2xl w-full cursor-pointer
-                      ${
-                        value == activeKeyword &&
-                        "bg-gray-500 text-white font-bold"
-                      }`}
-                        onClick={() => filterCategory(value, "keywords")}
-                      >
-                        {value}
-                      </div>
-                    ))}
+                <div>
+                  <div className=" grid place-items-center  mb-10 w-full">
+                    <h1 className="text-2xl">{movies.title}</h1>
+                    <div className="place-items-center  mb-10 w-full  my-1 grid grid-flow-row-dense grid-cols-3 xl:grid-cols-4">
+                      {name &&
+                        name.map((value) => (
+                          <div
+                            key={value}
+                            className={`flex items-center justify-center p-2  rounded-2xl w-full cursor-pointer
+                    ${
+                      value == activeName && "bg-gray-500 text-white font-bold"
+                    }`}
+                            onClick={() => filterCategory(value, "name")}
+                          >
+                            {value}
+                          </div>
+                        ))}
+                    </div>
+                    <div className="place-items-center  mb-10 w-full  my-1 grid grid-flow-row-dense grid-cols-3 xl:grid-cols-4">
+                      {keywords &&
+                        keywords.map((value) => (
+                          <div
+                            key={value}
+                            className={`flex items-center justify-center p-2  rounded-2xl w-full cursor-pointer
+                    ${
+                      value == activeKeyword &&
+                      "bg-gray-500 text-white font-bold"
+                    }`}
+                            onClick={() => filterCategory(value, "keywords")}
+                          >
+                            {value}
+                          </div>
+                        ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+            <div>
+              <h1 className=" text-center text-2xl lg:text-4xl font-medium">
+                Suggest Movie
+              </h1>
+              <div className="px-5 my-10 grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 ">
+                {showSuggest && searchResults ? (
+                  <>
+                    {searchResults.map((collection) => (
+                      <SuggestList
+                        id={collection.id}
+                        code={collection.code}
+                        image={collection.image}
+                        name={collection.name}
+                        title={collection.title}
+                        keywords={collection.keywords}
+                        publisher={collection.publisher}
+                        resultCode={movies.code}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {!showSuggest &&
+                      !!filterMovie?.length &&
+                      filterMovie.map((collection) => (
+                        <SuggestList
+                          id={collection.id}
+                          code={collection.code}
+                          image={collection.image}
+                          name={collection.name}
+                          title={collection.title}
+                          keywords={collection.keywords}
+                          publisher={collection.publisher}
+                          resultCode={movies.code}
+                        />
+                      ))}
+                  </>
+                )}
+              </div>
+            </div>
+          </main>
         </div>
-        <div>
-          <h1 className=" text-center text-2xl lg:text-4xl font-medium">
-            Suggest Movie
-          </h1>
-          <div className="px-5 my-10 grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 ">
-            {showSuggest && searchResults ? (
-              <>
-                {searchResults.map((collection) => (
-                  <ResultList
-                    id={collection.id}
-                    code={collection.code}
-                    image={collection.image}
-                    name={collection.name}
-                    title={collection.title}
-                    keywords={collection.keywords}
-                    publisher={collection.publisher}
-                  />
-                ))}
-              </>
-            ) : (
-              <>
-                {!showSuggest &&
-                  !!filterMovie?.length &&
-                  filterMovie.map((collection) => (
-                    <ResultList
-                      id={collection.id}
-                      code={collection.code}
-                      image={collection.image}
-                      name={collection.name}
-                      title={collection.title}
-                      keywords={collection.keywords}
-                      publisher={collection.publisher}
-                    />
-                  ))}
-              </>
-            )}
-          </div>
-        </div>
-      </main>
-    </div>
+      </Zoom>
+    </>
   );
 }
 
