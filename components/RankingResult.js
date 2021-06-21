@@ -7,7 +7,7 @@ function RankingResult({ collections, actress, newBie, royal }) {
     <div>
       <div>
         <h1 className="text-center text-2xl lg:text-4xl font-medium">
-          The Top 5 Movies (May19 - June19)
+          The Top 5 Movies (June19 - July19)
         </h1>
         <div className="px-5 my-10 grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3">
           {collections.map((collection) => (
@@ -25,7 +25,7 @@ function RankingResult({ collections, actress, newBie, royal }) {
       </div>
       <div>
         <h1 className="text-center text-2xl lg:text-4xl font-medium">
-          The Top 5 Actress (May19 - June19)
+          The Top 5 Actress (June19 - July19)
         </h1>
         <div className="px-5 my-10 grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3">
           {actress.map((actress) => (
@@ -40,7 +40,7 @@ function RankingResult({ collections, actress, newBie, royal }) {
       </div>
       <div>
         <h1 className="text-center text-2xl lg:text-4xl font-medium">
-          The Top 5 Newbie (May19 - June19)
+          The Top 5 Newbie (June19 - July19)
         </h1>
         <div className="px-5 my-10 grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3">
           {newBie.map((actress) => (
