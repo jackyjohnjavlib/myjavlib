@@ -23,6 +23,7 @@ module.exports = withImages({
       "www.tameikegoro.jp",
       "image.up-timely.com",
       "www.premium-beauty.com",
+      "www.kawaiikawaii.jp",
     ],
   },
 });
