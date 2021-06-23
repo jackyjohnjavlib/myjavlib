@@ -9,10 +9,8 @@ import { addMovie } from "../features/movieSlice";
 
 import javlibData from "../config/javlibData.json";
 
-export default function Home(results) {
+export default function Home() {
   const dispatch = useDispatch();
-
-  console.log("javlibDatas>>>", results);
 
   useEffect(() => {
     dispatch(addMovie(javlibData));

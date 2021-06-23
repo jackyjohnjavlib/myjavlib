@@ -11,3 +11,13 @@ export const getUniqueValues = (data, type) => {
 
   return ["all", ...new Set(unique)];
 };
+
+export const getUniqueName = (data, type) => {
+  let unique = data.map((item) => item[type]);
+
+  if (type === "name") {
+    unique = unique.flat();
+  }
+
+  return [...new Set(unique)];
+};

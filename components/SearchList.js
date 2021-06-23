@@ -1,19 +1,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { navDetail } from "../features/movieSlice";
 import Fade from "react-reveal/Fade";
+import { useState, useEffect } from "react";
 
 function SearchList({ id, code, image, name, title, publisher, keywords }) {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [activeName, setActiveName] = useState("");
+  const [activeKeyword, setActiveKeyword] = useState("");
 
   const navToDetails = () => {
     dispatch(navDetail({ id, code, image, name, title, publisher, keywords }));
     router.push(`/details/${id}`);
   };
+
   return (
     <>
       <Fade bottom>
@@ -29,10 +32,13 @@ function SearchList({ id, code, image, name, title, publisher, keywords }) {
                 height="160"
                 width="160"
                 className=" object-contain"
+                onClick={navToDetails}
               />
             ))}
           </div>
-          <h1 className="">{code}</h1>
+          <h1 onClick={navToDetails} className="">
+            {code}
+          </h1>
           <div className="flex space-x-4">
             {name.map((name) => (
               <div>

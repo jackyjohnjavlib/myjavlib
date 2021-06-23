@@ -1,14 +1,6 @@
-import db from "../config/firebase";
-import moment from "moment";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { AiOutlineSearch } from "react-icons/ai";
-import javlibData from "../config/javlibData.json";
-import Link from "next/link";
-import { useDispatch } from "react-redux";
-import { navDetail } from "../features/movieSlice";
 import SearchList from "./SearchList";
-
 import HeaderItems from "./HeaderItems";
 import {
   AdjustmentsIcon,
@@ -21,6 +13,8 @@ import {
   SearchIcon,
   UserIcon,
 } from "@heroicons/react/outline";
+import { useDispatch, useSelector } from "react-redux";
+import { selectMovie } from "../features/movieSlice";
 
 /*const addfile = (e) => {
   e.preventDefault();
@@ -36,21 +30,33 @@ import {
   });
 };*/
 
-function Header({ collections }) {
-  const dispatch = useDispatch();
-
+function Header() {
+  const all_movie = useSelector(selectMovie);
+  const dataList = all_movie;
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
+  const excludeColumns = ["id", "color"];
 
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-    setSearchResults(
-      collections.filter((collection) =>
-        collection.code.includes(searchTerm.toLocaleUpperCase())
-      )
-    );
+  const handleChange = (value) => {
+    setSearchTerm(value);
+    filterData(value);
+  };
+
+  const filterData = (value) => {
+    const Value = value.toLocaleUpperCase().trim();
+    if (Value === "") setSearchResults(dataList);
+    else {
+      const filteredData = dataList.filter((item) => {
+        return Object.keys(item).some((key) =>
+          excludeColumns.includes(key)
+            ? false
+            : item[key].toString().toLocaleUpperCase().includes(Value)
+        );
+      });
+      setSearchResults(filteredData);
+    }
   };
 
   const navtoHome = () => {
@@ -70,7 +76,7 @@ function Header({ collections }) {
   };
 
   const navtoRank = () => {
-    router.push("/rank");
+    router.push("/actress");
   };
 
   return (
@@ -94,7 +100,11 @@ function Header({ collections }) {
             navtosearch={navtowebsite}
           />
 
-          <HeaderItems title="RANK" Icon={FireIcon} navtosearch={navtoRank} />
+          <HeaderItems
+            title="ACTRESS"
+            Icon={FireIcon}
+            navtosearch={navtoRank}
+          />
         </div>
       </div>
       <div className="w-full flex relative items-center rounded-md h-10 flex-grow cursor-pointer  bg-yellow-400  hover:bg-yellow-500">
@@ -103,7 +113,7 @@ function Header({ collections }) {
           onBlur={() => setShowResults(false)}
           onFocus={() => setShowResults(true)}
           value={searchTerm}
-          onChange={handleSearch}
+          onChange={(e) => handleChange(e.target.value)}
           placeholder="Search anything you need... (Live Search by Filter)"
           className={` font-bold tracking-widest bg-gradient-to-l text-gray-800 from-[#06202A] p-2 px-5 h-full w-full flex-grow rounded flex-shrink rounded-l-md focus:outline-none
           `}
@@ -114,7 +124,7 @@ function Header({ collections }) {
             onClick={() => setShowResults(true)}
             onMouseOver={() => setShowResults(true)}
             onMouseLeave={() => setShowResults(false)}
-            className="absolute w-full bg-white bottom-0 z-50 rounded-md"
+            className="absolute w-full bg-white bottom-0 z-50  scrollbar-hide"
             style={{
               transform: "translateY(100%)",
               height: "auto",
@@ -138,7 +148,7 @@ function Header({ collections }) {
               <>
                 {searchTerm && (
                   <p className="text-xs text-gray-400 text-center py-2">
-                    No product found
+                    No Movies found
                   </p>
                 )}
               </>

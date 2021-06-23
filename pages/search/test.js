@@ -19,62 +19,16 @@ import Zoom from "react-reveal/Zoom";
 
 function Details() {
   const dispatch = useDispatch();
-
   const movies = useSelector(selectDetail);
   const all_movie = useSelector(selectMovie);
   const filterMovie = useSelector(selectFilter);
-  const dataList = all_movie;
   const [activeName, setActiveName] = useState("");
-  const [activeKeyword, setActiveKeyword] = useState("");
+  const [activeKeyword, setActiveKeyword] = useState("all");
 
-  const [searchResults, setSearchResults] = useState(dataList);
+  const [searchResults, setSearchResults] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState(movies.name[0]);
   const [showSuggest, setShowSuggest] = useState(true);
-
-  const excludeColumns = ["id", "color"];
-  const handleChange = (value) => {
-    setSearchTerm(value);
-    filterData(value);
-  };
-
-  useEffect(() => {
-    setSearchResults(
-      javlibData.filter((collection) =>
-        collection.name.includes(movies.name[0])
-      )
-    );
-    setActiveKeyword("");
-    setActiveName("");
-  }, [javlibData, movies.name[0]]);
-
-  const filterData = (value, item) => {
-    const Value = value.toLocaleUpperCase().trim();
-    if (item === "name") {
-      setActiveName(value);
-      setActiveKeyword("");
-    }
-    if (item === "keywords") {
-      setActiveName("");
-      setActiveKeyword(value);
-    }
-    if (Value === "")
-      setSearchResults(
-        javlibData.filter((collection) =>
-          collection.name.includes(movies.name[0])
-        )
-      );
-    else {
-      const filteredData = dataList.filter((item) => {
-        return Object.keys(item).some((key) =>
-          excludeColumns.includes(key)
-            ? false
-            : item[key].toString().toLocaleUpperCase().includes(Value)
-        );
-      });
-      setSearchResults(filteredData);
-    }
-  };
 
   const getUniqueName = () => {
     let unique = movies.name.map((name) => name);
@@ -123,6 +77,17 @@ function Details() {
     }
   };
 
+  useEffect(() => {
+    setSearchResults(
+      javlibData.filter((collection) =>
+        collection.name.includes(movies.name[0])
+      )
+    );
+    setActiveKeyword("");
+    setActiveName("");
+    setShowSuggest(true);
+  }, [javlibData, movies.name[0]]);
+
   return (
     <>
       <Zoom bottom>
@@ -155,7 +120,6 @@ function Details() {
                   <div className=" grid place-items-center  mb-10 w-full">
                     <h1 className="text-2xl">{movies.title}</h1>
                     <div className="place-items-center  mb-10 w-full  my-1 grid grid-flow-row-dense grid-cols-3 xl:grid-cols-4">
-                      <h1 className="">{movies.code}</h1>
                       {name &&
                         name.map((value) => (
                           <div
@@ -164,7 +128,7 @@ function Details() {
                     ${
                       value == activeName && "bg-gray-500 text-white font-bold"
                     }`}
-                            onClick={() => filterData(value, "name")}
+                            onClick={() => filterCategory(value, "name")}
                           >
                             {value}
                           </div>
@@ -180,7 +144,7 @@ function Details() {
                       value == activeKeyword &&
                       "bg-gray-500 text-white font-bold"
                     }`}
-                            onClick={() => filterData(value, "keywords")}
+                            onClick={() => filterCategory(value, "keywords")}
                           >
                             {value}
                           </div>
@@ -195,18 +159,39 @@ function Details() {
                 Suggest Movie
               </h1>
               <div className="px-5 my-10 grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 ">
-                {searchResults.map((collection) => (
-                  <SuggestList
-                    id={collection.id}
-                    code={collection.code}
-                    image={collection.image}
-                    name={collection.name}
-                    title={collection.title}
-                    keywords={collection.keywords}
-                    publisher={collection.publisher}
-                    resultCode={movies.code}
-                  />
-                ))}
+                {showSuggest && searchResults ? (
+                  <>
+                    {searchResults.map((collection) => (
+                      <SuggestList
+                        id={collection.id}
+                        code={collection.code}
+                        image={collection.image}
+                        name={collection.name}
+                        title={collection.title}
+                        keywords={collection.keywords}
+                        publisher={collection.publisher}
+                        resultCode={movies.code}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {!showSuggest &&
+                      !!filterMovie?.length &&
+                      filterMovie.map((collection) => (
+                        <SuggestList
+                          id={collection.id}
+                          code={collection.code}
+                          image={collection.image}
+                          name={collection.name}
+                          title={collection.title}
+                          keywords={collection.keywords}
+                          publisher={collection.publisher}
+                          resultCode={movies.code}
+                        />
+                      ))}
+                  </>
+                )}
               </div>
             </div>
           </main>

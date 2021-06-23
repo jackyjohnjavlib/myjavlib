@@ -11,6 +11,8 @@ import moodyzlogo from "../images/moodyzlogo.gif";
 import tameikegoro from "../images/taamekalogo.png";
 import premiumlogo from "../images/logo_premium.png";
 import kawaiilogo from "../images/kawaii_logo.png";
+import wanzlogo from "../images/logo_wanz.png";
+import dasdlogo from "../images/logo_dasd.png";
 
 function website() {
   return (
@@ -104,6 +106,28 @@ function website() {
             <Link href="https://www.tameikegoro.jp/top/">
               <Image
                 src={tameikegoro}
+                height={300}
+                width={300}
+                objectFit="contain"
+                className={` cursor-pointer  transition duration-300 ease-in transform sm:hover:scale-125`}
+              />
+            </Link>
+          </div>
+          <div className="relative flex flex-col m-5 bg-white z-30 p-10 shadow-lg">
+            <Link href="https://www.wanz-factory.com/top/">
+              <Image
+                src={wanzlogo}
+                height={300}
+                width={300}
+                objectFit="contain"
+                className={` cursor-pointer  transition duration-300 ease-in transform sm:hover:scale-125`}
+              />
+            </Link>
+          </div>
+          <div className="relative flex flex-col m-5 bg-white z-30 p-10 shadow-lg">
+            <Link href="https://www.dasdas.jp/top/">
+              <Image
+                src={dasdlogo}
                 height={300}
                 width={300}
                 objectFit="contain"
