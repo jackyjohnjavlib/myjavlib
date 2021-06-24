@@ -63,6 +63,11 @@ function index() {
     }
   };
 
+  const reset = () => {
+    setSearchResults(dataList);
+    setSearchTerm("");
+  };
+
   {
     /**
      * 
@@ -172,7 +177,11 @@ function index() {
               navtosearch={navtowebsite}
             />
 
-            <HeaderItems title="RANK" Icon={FireIcon} navtosearch={navtoRank} />
+            <HeaderItems
+              title="ACTRESS"
+              Icon={FireIcon}
+              navtosearch={navtoRank}
+            />
           </div>
         </div>
 
@@ -201,6 +210,13 @@ function index() {
             />
           ))}
         </div>
+        {searchResults.length === 0 && (
+          <div className="flex items-center justify-center cursor-pointer">
+            <h1 className="text-6xl text-gray-400 text-center font-medium tracking-widest">
+              No Movies found
+            </h1>
+          </div>
+        )}
       </main>
     </div>
   );
