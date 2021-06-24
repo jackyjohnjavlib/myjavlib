@@ -26,11 +26,14 @@ function Details() {
   const dataList = all_movie;
   const [activeName, setActiveName] = useState("");
   const [activeKeyword, setActiveKeyword] = useState("");
+  const [activeSeries, setActiveSeries] = useState("");
 
   const [searchResults, setSearchResults] = useState(dataList);
 
   const [searchTerm, setSearchTerm] = useState(movies.name[0]);
   const [showSuggest, setShowSuggest] = useState(true);
+
+  console.log(movies.series);
 
   const excludeColumns = ["id", "color"];
   const handleChange = (value) => {
@@ -46,6 +49,7 @@ function Details() {
     );
     setActiveKeyword("");
     setActiveName("");
+    setActiveSeries("");
   }, [javlibData, movies.name[0]]);
 
   const filterData = (value, item) => {
@@ -53,10 +57,17 @@ function Details() {
     if (item === "name") {
       setActiveName(value);
       setActiveKeyword("");
+      setActiveSeries("");
+    }
+    if (item === "series") {
+      setActiveSeries(value);
+      setActiveKeyword("");
+      setActiveName("");
     }
     if (item === "keywords") {
       setActiveName("");
       setActiveKeyword(value);
+      setActiveSeries("");
     }
     if (Value === "")
       setSearchResults(
@@ -91,8 +102,12 @@ function Details() {
     return [...new Set(unique)];
   };
 
-  const name = all_movie ? getUniqueName() : null;
+  const getUniqueSeries = () => {
+    let unique = movies.series.map((series) => series);
+    return [...new Set(unique)];
+  };
 
+  const name = all_movie ? getUniqueName() : null;
   const keywords = all_movie ? getUniqueKeywords() : null;
 
   const filterCategory = (value, item) => {
@@ -153,9 +168,23 @@ function Details() {
                 </div>
                 <div>
                   <div className=" grid place-items-center  mb-10 w-full">
-                    <h1 className="text-2xl">{movies.title}</h1>
+                    <div className="p-4">
+                      <h1 className="text-lg lg:text-2xl">{movies.title}</h1>
+                    </div>
                     <div className="place-items-center  mb-10 w-full  my-1 grid grid-flow-row-dense grid-cols-3 xl:grid-cols-4">
                       <h1 className="">{movies.code}</h1>
+                      {movies.series && (
+                        <div
+                          onClick={() => filterData(movies.series, "series")}
+                          className={`flex items-center justify-center p-2  rounded-2xl w-full cursor-pointer
+                          ${
+                            activeSeries && "bg-gray-500 text-white font-bold"
+                          }`}
+                        >
+                          <h1 className="cursor-pointer">{movies.series}</h1>
+                        </div>
+                      )}
+
                       {name &&
                         name.map((value) => (
                           <div
@@ -170,6 +199,7 @@ function Details() {
                           </div>
                         ))}
                     </div>
+
                     <div className="place-items-center  mb-10 w-full  my-1 grid grid-flow-row-dense grid-cols-3 xl:grid-cols-4">
                       {keywords &&
                         keywords.map((value) => (
@@ -205,6 +235,7 @@ function Details() {
                     keywords={collection.keywords}
                     publisher={collection.publisher}
                     resultCode={movies.code}
+                    series={collection.series}
                   />
                 ))}
               </div>

@@ -12,12 +12,23 @@ import {
 import Fade from "react-reveal/Fade";
 import { useDispatch, useSelector } from "react-redux";
 
-function ResultList({ id, code, image, name, title, publisher, keywords }) {
+function ResultList({
+  id,
+  code,
+  image,
+  name,
+  title,
+  publisher,
+  keywords,
+  series,
+}) {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const navToDetails = () => {
-    dispatch(navDetail({ id, code, image, name, title, publisher, keywords }));
+    dispatch(
+      navDetail({ id, code, image, name, title, publisher, keywords, series })
+    );
     router.push(`/details/${id}`);
   };
 

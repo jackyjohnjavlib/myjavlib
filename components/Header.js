@@ -82,7 +82,7 @@ function Header() {
   return (
     <div className="flex flex-col items-center sticky top-0 z-50 shadow-lg h-auto m-5">
       <div className="flex items-center space-x-6">
-        <div className="flex flex-grow justify-evenly max-w-2xl">
+        <div className="flex flex-grow justify-evenly max-w-2xl mt-4">
           <HeaderItems title="HOME" Icon={HomeIcon} navtoHome={navtoHome} />
           <HeaderItems
             title="FILTER"
@@ -142,6 +142,7 @@ function Header() {
                   title={collection.title}
                   keywords={collection.keywords}
                   publisher={collection.publisher}
+                  series={collection.series}
                 />
               ))
             ) : (

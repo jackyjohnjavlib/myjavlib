@@ -12,8 +12,6 @@ import javlibData from "../config/javlibData.json";
 export default function Home({ movies }) {
   const dispatch = useDispatch();
 
-  console.log("m", movies);
-
   useEffect(() => {
     dispatch(addMovie(movies));
   }, [movies]);

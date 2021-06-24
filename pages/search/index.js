@@ -207,6 +207,7 @@ function index() {
               title={collection.title}
               keywords={collection.keywords}
               publisher={collection.publisher}
+              series={collection.series}
             />
           ))}
         </div>

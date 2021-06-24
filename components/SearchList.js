@@ -6,14 +6,25 @@ import { navDetail } from "../features/movieSlice";
 import Fade from "react-reveal/Fade";
 import { useState, useEffect } from "react";
 
-function SearchList({ id, code, image, name, title, publisher, keywords }) {
+function SearchList({
+  id,
+  code,
+  image,
+  name,
+  title,
+  publisher,
+  keywords,
+  series,
+}) {
   const router = useRouter();
   const dispatch = useDispatch();
   const [activeName, setActiveName] = useState("");
   const [activeKeyword, setActiveKeyword] = useState("");
 
   const navToDetails = () => {
-    dispatch(navDetail({ id, code, image, name, title, publisher, keywords }));
+    dispatch(
+      navDetail({ id, code, image, name, title, publisher, keywords, series })
+    );
     router.push(`/details/${id}`);
   };
 
