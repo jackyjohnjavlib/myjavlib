@@ -6,7 +6,7 @@ export const getUniqueValues = (data, type) => {
   }
 
   if (type === "keywords") {
-    unique = uniquew;
+    unique = unique;
   }
 
   return ["all", ...new Set(unique)];
