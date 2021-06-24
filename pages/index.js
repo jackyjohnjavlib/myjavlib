@@ -9,12 +9,14 @@ import { addMovie } from "../features/movieSlice";
 
 import javlibData from "../config/javlibData.json";
 
-export default function Home() {
+export default function Home({ movies }) {
   const dispatch = useDispatch();
 
+  console.log("m", movies);
+
   useEffect(() => {
-    dispatch(addMovie(javlibData));
-  }, [javlibData]);
+    dispatch(addMovie(movies));
+  }, [movies]);
 
   return (
     <div className="">
@@ -30,4 +32,16 @@ export default function Home() {
       </main>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const ref = javlibData;
+
+  const movieRes = await ref;
+
+  return {
+    props: {
+      movies: movieRes,
+    },
+  };
 }
