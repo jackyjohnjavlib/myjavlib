@@ -6,18 +6,14 @@ import ResultList from "../../components/ResultList";
 import javlibData from "../../config/javlibData.json";
 import {
   AdjustmentsIcon,
-  BadgeCheckIcon,
-  CollectionIcon,
   FireIcon,
   GlobeAltIcon,
   HomeIcon,
-  LightningBoltIcon,
   SearchIcon,
-  UserIcon,
 } from "@heroicons/react/outline";
 
-function index() {
-  const dataList = javlibData;
+function index({ movies }) {
+  const dataList = movies;
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState(dataList);
@@ -224,3 +220,15 @@ function index() {
 }
 
 export default index;
+
+export async function getServerSideProps(context) {
+  const ref = javlibData;
+
+  const movieRes = await ref;
+
+  return {
+    props: {
+      movies: movieRes,
+    },
+  };
+}

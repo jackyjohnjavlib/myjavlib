@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  addMovie,
   clearFilters,
   selectFilter,
   selectMovie,
@@ -13,8 +14,9 @@ import Link from "next/link";
 import { getUniqueValues } from "../../utils/helpers";
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 import Fade from "react-reveal/Fade";
+import javlibData from "../../config/javlibData.json";
 
-function index({ collections }) {
+function index({ movies }) {
   const dispatch = useDispatch();
 
   const all_movie = useSelector(selectMovie);
@@ -32,6 +34,10 @@ function index({ collections }) {
   const publisher = all_movie ? getUniqueValues(all_movie, "publisher") : null;
   const name = all_movie ? getUniqueValues(all_movie, "name") : null;
   const keywords = all_movie ? getUniqueValues(all_movie, "keywords") : null;
+
+  useEffect(() => {
+    dispatch(addMovie(movies));
+  }, [movies]);
 
   /*const filterCategory = (value, item) => {
     setShowClear(true);
@@ -383,3 +389,15 @@ function index({ collections }) {
 }
 
 export default index;
+
+export async function getServerSideProps(context) {
+  const ref = javlibData;
+
+  const movieRes = await ref;
+
+  return {
+    props: {
+      movies: movieRes,
+    },
+  };
+}

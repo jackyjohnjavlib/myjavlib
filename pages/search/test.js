@@ -24,6 +24,8 @@ function Details() {
   const filterMovie = useSelector(selectFilter);
   const [activeName, setActiveName] = useState("");
   const [activeKeyword, setActiveKeyword] = useState("all");
+  const [activeSeries, setActiveSeries] = useState("");
+  const [lastChange, setLastChange] = useState(null);
 
   const [searchResults, setSearchResults] = useState([]);
 
@@ -55,9 +57,20 @@ function Details() {
       setActivePublisher(value);
       setLastChange("publisher");
     }
+    if (item === "series") {
+      setActiveSeries(value);
+      setActiveKeyword("");
+      setActiveName("");
+      const filtered =
+        value !== "all"
+          ? all_movie.filter((movie) => movie[item].includes(value))
+          : all_movie;
+      dispatch(updateFilter(filtered));
+    }
     if (item === "name") {
       setActiveName(value);
       setActiveKeyword("");
+      setActiveSeries("");
       //setLastChange("name");
       const filtered =
         value !== "all"
@@ -68,6 +81,7 @@ function Details() {
     if (item === "keywords") {
       setActiveName("");
       setActiveKeyword(value);
+      setActiveSeries("");
       //setLastChange("colors");
       const filtered =
         value !== "all"
@@ -85,8 +99,43 @@ function Details() {
     );
     setActiveKeyword("");
     setActiveName("");
+    setActiveSeries("");
     setShowSuggest(true);
   }, [javlibData, movies.name[0]]);
+
+  useEffect(() => {
+    const items = ["series"];
+    const hello = {
+      series: activeSeries,
+    };
+    // const items = ['category', 'company', 'colors']
+    if (all_movie) {
+      let filtered = all_movie;
+
+      if (hello[lastChange] !== "all") {
+        filtered = all_movie.filter(
+          (movie) => movie[lastChange] === hello[lastChange]
+        );
+      } else {
+        items.forEach((x) => {
+          filtered =
+            x == lastChange && hello[x] !== "all"
+              ? filtered.filter((movie) => movie[x] === hello[x])
+              : filtered;
+        });
+      }
+
+      items.forEach((x) => {
+        if (hello[x] !== "all") {
+          filtered =
+            x !== lastChange
+              ? filtered.filter((movie) => movie[x] === hello[x])
+              : filtered;
+        }
+      });
+      dispatch(updateFilter(filtered));
+    }
+  }, [activeSeries, lastChange]);
 
   return (
     <>
@@ -120,6 +169,20 @@ function Details() {
                   <div className=" grid place-items-center  mb-10 w-full">
                     <h1 className="text-2xl">{movies.title}</h1>
                     <div className="place-items-center  mb-10 w-full  my-1 grid grid-flow-row-dense grid-cols-3 xl:grid-cols-4">
+                      <h1 className="">{movies.code}</h1>
+                      {movies.series && (
+                        <div
+                          onClick={() =>
+                            filterCategory(movies.series, "series")
+                          }
+                          className={`flex items-center justify-center p-2  rounded-2xl w-full cursor-pointer
+                          ${
+                            activeSeries && "bg-gray-500 text-white font-bold"
+                          }`}
+                        >
+                          <h1 className="cursor-pointer">{movies.series}</h1>
+                        </div>
+                      )}
                       {name &&
                         name.map((value) => (
                           <div
@@ -171,6 +234,7 @@ function Details() {
                         keywords={collection.keywords}
                         publisher={collection.publisher}
                         resultCode={movies.code}
+                        series={collection.series}
                       />
                     ))}
                   </>
@@ -188,6 +252,7 @@ function Details() {
                           keywords={collection.keywords}
                           publisher={collection.publisher}
                           resultCode={movies.code}
+                          series={collection.series}
                         />
                       ))}
                   </>

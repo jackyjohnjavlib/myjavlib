@@ -43,7 +43,6 @@ function index() {
   const name = all_movie ? getUniqueName(all_movie, "name") : null;
 
   const actressPublisher = actress ? getUniqueName(actress, "publisher") : null;
-  console.log(actressPublisher);
 
   const navtoHome = () => {
     router.push("/");
