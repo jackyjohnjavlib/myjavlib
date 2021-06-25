@@ -10,6 +10,7 @@ import {
   GlobeAltIcon,
   HomeIcon,
   SearchIcon,
+  GiftIcon,
 } from "@heroicons/react/outline";
 
 function index({ movies }) {
@@ -40,10 +41,15 @@ function index({ movies }) {
   const navtoRank = () => {
     router.push("/actress");
   };
-
+  const navtomobileRandom = () => {
+    router.push("/mobilerandom");
+  };
   const handleChange = (value) => {
     setSearchTerm(value);
     filterData(value);
+  };
+  const navtoRandom = () => {
+    router.push("/random");
   };
 
   const filterData = (value) => {
@@ -169,12 +175,25 @@ function index({ movies }) {
               Icon={GlobeAltIcon}
               navtosearch={navtowebsite}
             />
-
             <HeaderItems
               title="ACTRESS"
               Icon={FireIcon}
               navtosearch={navtoRank}
-            />
+            />{" "}
+            <div className="flex lg:hidden">
+              <HeaderItems
+                title="Random"
+                Icon={GiftIcon}
+                navtosearch={navtomobileRandom}
+              />
+            </div>
+            <div className="hidden lg:flex">
+              <HeaderItems
+                title="Random"
+                Icon={GiftIcon}
+                navtosearch={navtoRandom}
+              />
+            </div>
           </div>
         </div>
 
