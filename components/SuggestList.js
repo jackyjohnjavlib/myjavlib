@@ -39,7 +39,7 @@ function SuggestList({
     <>
       <Fade bottom>
         <div
-          key={id}
+          key={code}
           className="p-2 group cursor-pointer transition duration-200 ease-in transform sm:hover:scale-105 hover:z-50"
         >
           {image.map((image) => (

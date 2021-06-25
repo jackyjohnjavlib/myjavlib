@@ -17,6 +17,7 @@ function Banner() {
         showThumbs={false}
         centerMode={true}
         centerSlidePercentage={58}
+        stopOnHover={true}
       >
         {javlibData
           .sort(() => Math.random() - Math.random())

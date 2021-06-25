@@ -32,6 +32,7 @@ function SearchList({
     <>
       <Fade bottom>
         <div
+          key={code}
           onClick={navToDetails}
           className="p-2 flex items-center space-x-4 hover:bg-gray-800 text-black hover:text-white rounded-3xl"
         >
