@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import Result from "../components/Result";
 import { useDispatch, useSelector } from "react-redux";
 import { addMovie } from "../features/movieSlice";
+import Banner from "../components/Banner";
 
 import javlibData from "../config/javlibData.json";
 

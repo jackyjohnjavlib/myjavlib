@@ -19,6 +19,8 @@ function index({ movies }) {
   const [searchResults, setSearchResults] = useState(dataList);
   const excludeColumns = ["id", "color"];
 
+  console.log(searchResults.length);
+
   const navtoHome = () => {
     router.push("/");
   };
@@ -57,11 +59,6 @@ function index({ movies }) {
       });
       setSearchResults(filteredData);
     }
-  };
-
-  const reset = () => {
-    setSearchResults(dataList);
-    setSearchTerm("");
   };
 
   {
@@ -194,18 +191,20 @@ function index({ movies }) {
 
       <main className="mx-auto max-w-screen">
         <div className="px-5 my-10 grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {searchResults.map((collection) => (
-            <ResultList
-              id={collection.id}
-              code={collection.code}
-              image={collection.image}
-              name={collection.name}
-              title={collection.title}
-              keywords={collection.keywords}
-              publisher={collection.publisher}
-              series={collection.series}
-            />
-          ))}
+          {searchResults
+            .sort(() => Math.random() - Math.random())
+            .map((collection) => (
+              <ResultList
+                id={collection.id}
+                code={collection.code}
+                image={collection.image}
+                name={collection.name}
+                title={collection.title}
+                keywords={collection.keywords}
+                publisher={collection.publisher}
+                series={collection.series}
+              />
+            ))}
         </div>
         {searchResults.length === 0 && (
           <div className="flex items-center justify-center cursor-pointer">

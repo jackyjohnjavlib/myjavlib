@@ -4,16 +4,13 @@ import SearchList from "./SearchList";
 import HeaderItems from "./HeaderItems";
 import {
   AdjustmentsIcon,
-  BadgeCheckIcon,
-  CollectionIcon,
   FireIcon,
   GlobeAltIcon,
   HomeIcon,
-  LightningBoltIcon,
   SearchIcon,
-  UserIcon,
+  GiftIcon,
 } from "@heroicons/react/outline";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectMovie } from "../features/movieSlice";
 
 /*const addfile = (e) => {
@@ -79,6 +76,13 @@ function Header() {
     router.push("/actress");
   };
 
+  const navtoRandom = () => {
+    router.push("/random");
+  };
+  const navtomobileRandom = () => {
+    router.push("/mobilerandom");
+  };
+
   return (
     <div className="flex flex-col items-center sticky top-0 z-50 shadow-lg h-auto m-5">
       <div className="flex items-center space-x-6">
@@ -99,12 +103,25 @@ function Header() {
             Icon={GlobeAltIcon}
             navtosearch={navtowebsite}
           />
-
           <HeaderItems
             title="ACTRESS"
             Icon={FireIcon}
             navtosearch={navtoRank}
           />
+          <div className="flex lg:hidden">
+            <HeaderItems
+              title="Random"
+              Icon={GiftIcon}
+              navtosearch={navtomobileRandom}
+            />
+          </div>
+          <div className="hidden lg:flex">
+            <HeaderItems
+              title="Random"
+              Icon={GiftIcon}
+              navtosearch={navtoRandom}
+            />
+          </div>
         </div>
       </div>
       <div className="w-full flex relative items-center rounded-md h-10 flex-grow cursor-pointer  bg-yellow-400  hover:bg-yellow-500">

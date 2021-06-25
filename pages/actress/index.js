@@ -1,30 +1,27 @@
 import Head from "next/head";
 
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import javlibData from "../../config/javlibData.json";
+
 import actress from "../../config/actress.json";
 import {
   selectFilter,
   selectMovie,
   updateFilter,
 } from "../../features/movieSlice";
-import { getUniqueValues, getUniqueName } from "../../utils/helpers";
+import { getUniqueName } from "../../utils/helpers";
 import Image from "next/image";
 import Fade from "react-reveal/Fade";
 import ResultList from "../../components/ResultList";
 import HeaderItems from "../../components/HeaderItems";
 import {
   AdjustmentsIcon,
-  BadgeCheckIcon,
-  CollectionIcon,
+  GiftIcon,
   FireIcon,
   GlobeAltIcon,
   HomeIcon,
-  LightningBoltIcon,
   SearchIcon,
-  UserIcon,
 } from "@heroicons/react/outline";
 
 function index() {
@@ -39,10 +36,6 @@ function index() {
   const [searchActress, setSearchActress] = useState(true);
   const [showMovie, setShowMovie] = useState(false);
   const excludeColumns = ["id", "color"];
-
-  const name = all_movie ? getUniqueName(all_movie, "name") : null;
-
-  const actressPublisher = actress ? getUniqueName(actress, "publisher") : null;
 
   const navtoHome = () => {
     router.push("/");
@@ -63,7 +56,12 @@ function index() {
   const navtoRank = () => {
     router.push("/actress");
   };
-
+  const navtoRandom = () => {
+    router.push("/random");
+  };
+  const navtomobileRandom = () => {
+    router.push("/mobilerandom");
+  };
   const handleChange = (value) => {
     setSearchTerm(value);
     filterData(value);
@@ -148,12 +146,25 @@ function index() {
               Icon={GlobeAltIcon}
               navtosearch={navtowebsite}
             />
-
             <HeaderItems
               title="ACTRESS"
               Icon={FireIcon}
               navtosearch={navtoRank}
             />
+            <div className="flex lg:hidden">
+              <HeaderItems
+                title="Random"
+                Icon={GiftIcon}
+                navtosearch={navtomobileRandom}
+              />
+            </div>
+            <div className="hidden lg:flex">
+              <HeaderItems
+                title="Random"
+                Icon={GiftIcon}
+                navtosearch={navtoRandom}
+              />
+            </div>
           </div>
         </div>
         {!showMovie && (

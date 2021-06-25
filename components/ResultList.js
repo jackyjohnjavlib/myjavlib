@@ -37,7 +37,7 @@ function ResultList({
       <Fade bottom>
         <div
           key={id}
-          className="p-2 group cursor-pointer transition duration-200 ease-in transform sm:hover:scale-105 hover:z-50"
+          className="p-2 group cursor-pointer transition duration-200 z-30 ease-in transform sm:hover:scale-105 hover:z-50"
         >
           {image.map((image) => (
             <Image
