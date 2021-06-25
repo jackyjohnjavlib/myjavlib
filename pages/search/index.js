@@ -179,7 +179,7 @@ function index({ movies }) {
               title="ACTRESS"
               Icon={FireIcon}
               navtosearch={navtoRank}
-            />{" "}
+            />
             <div className="flex lg:hidden">
               <HeaderItems
                 title="Random"
