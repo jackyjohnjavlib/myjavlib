@@ -20,8 +20,8 @@ function Banner() {
         stopOnHover={true}
       >
         {javlibData
-          .sort(() => Math.random() - Math.random())
-          .slice(0, 10)
+          .sort(() => 0.5 - Math.random())
+          .slice(javlibData, 10)
           .map((collection) => (
             <div className=" cursor-pointer">
               <BannerItem

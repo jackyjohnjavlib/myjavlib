@@ -24,8 +24,7 @@ module.exports = withImages({
       "image.up-timely.com",
       "www.premium-beauty.com",
       "www.kawaiikawaii.jp",
-      "dy43ylo5q3vt8.cloudfront.net",
-      "drive.google.com",
+      "cdn.faleno.net",
     ],
   },
 });
