@@ -13,6 +13,8 @@ import premiumlogo from "../images/logo_premium.png";
 import kawaiilogo from "../images/kawaii_logo.png";
 import wanzlogo from "../images/logo_wanz.png";
 import dasdlogo from "../images/logo_dasd.png";
+import falenologo from "../images/faleno_logo.png";
+import dahlialogo from "../images/dahlia_logo.png";
 
 function website() {
   return (
@@ -103,9 +105,31 @@ function website() {
             </Link>
           </div>
           <div className="relative flex flex-col m-5 bg-white z-30 p-10 shadow-lg">
+            <Link href="https://faleno.jp/top/">
+              <Image
+                src={falenologo}
+                height={300}
+                width={300}
+                objectFit="contain"
+                className={` cursor-pointer  transition duration-300 ease-in transform sm:hover:scale-125`}
+              />
+            </Link>
+          </div>
+          <div className="relative flex flex-col m-5 bg-white z-30 p-10 shadow-lg">
             <Link href="https://www.tameikegoro.jp/top/">
               <Image
                 src={tameikegoro}
+                height={300}
+                width={300}
+                objectFit="contain"
+                className={` cursor-pointer  transition duration-300 ease-in transform sm:hover:scale-125`}
+              />
+            </Link>
+          </div>
+          <div className="relative flex flex-col m-5 bg-white z-30 p-10 shadow-lg">
+            <Link href="https://dahlia-av.jp/">
+              <Image
+                src={dahlialogo}
                 height={300}
                 width={300}
                 objectFit="contain"
