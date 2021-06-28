@@ -25,6 +25,7 @@ module.exports = withImages({
       "www.premium-beauty.com",
       "www.kawaiikawaii.jp",
       "cdn.faleno.net",
+      "www.dasdas.jp",
     ],
   },
 });

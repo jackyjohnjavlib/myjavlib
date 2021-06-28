@@ -61,11 +61,6 @@ function Details() {
       setActiveSeries(value);
       setActiveKeyword("");
       setActiveName("");
-      const filtered =
-        value !== "all"
-          ? all_movie.filter((movie) => movie[item].includes(value))
-          : all_movie;
-      dispatch(updateFilter(filtered));
     }
     if (item === "name") {
       setActiveName(value);
@@ -79,8 +74,8 @@ function Details() {
       dispatch(updateFilter(filtered));
     }
     if (item === "keywords") {
-      setActiveName("");
       setActiveKeyword(value);
+      setActiveName("");
       setActiveSeries("");
       //setLastChange("colors");
       const filtered =
@@ -167,7 +162,10 @@ function Details() {
                 </div>
                 <div>
                   <div className=" grid place-items-center  mb-10 w-full">
-                    <h1 className="text-2xl">{movies.title}</h1>
+                    <div className="p-4">
+                      <h1 className="text-lg lg:text-2xl">{movies.title}</h1>
+                    </div>
+
                     <div className="place-items-center  mb-10 w-full  my-1 grid grid-flow-row-dense grid-cols-3 xl:grid-cols-4">
                       <h1 className="">{movies.code}</h1>
                       {movies.series && (
@@ -180,7 +178,9 @@ function Details() {
                             activeSeries && "bg-gray-500 text-white font-bold"
                           }`}
                         >
-                          <h1 className="cursor-pointer">{movies.series}</h1>
+                          <h1 className="cursor-pointer line-clamp-1 lg:line-clamp-none">
+                            {movies.series}
+                          </h1>
                         </div>
                       )}
                       {name &&

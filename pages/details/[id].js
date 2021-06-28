@@ -21,6 +21,7 @@ function Details() {
   const dispatch = useDispatch();
   const movies = useSelector(selectDetail);
   const all_movie = useSelector(selectMovie);
+  const dataList = all_movie;
   const filterMovie = useSelector(selectFilter);
   const [activeName, setActiveName] = useState("");
   const [activeKeyword, setActiveKeyword] = useState("all");
@@ -31,6 +32,8 @@ function Details() {
 
   const [searchTerm, setSearchTerm] = useState(movies.name[0]);
   const [showSuggest, setShowSuggest] = useState(true);
+  const excludeColumns = ["id", "title"];
+  const [select, setSelect] = useState(false);
 
   const getUniqueName = () => {
     let unique = movies.name.map((name) => name);
@@ -132,6 +135,36 @@ function Details() {
     }
   }, [activeSeries, lastChange]);
 
+  const filterData = (value, item) => {
+    if (item === "series") {
+      setActiveSeries(value);
+      setActiveName("");
+      setActiveKeyword("");
+    }
+    if (item === "name") {
+      setActiveName(value);
+      setActiveKeyword("");
+      setActiveSeries("");
+    }
+    if (item === "keywords") {
+      setActiveKeyword(value);
+      setActiveName("");
+      setActiveSeries("");
+    }
+    const Value = value.toLocaleUpperCase().trim();
+    if (Value === "") setSearchResults(dataList);
+    else {
+      const filteredData = dataList.filter((item) => {
+        return Object.keys(item).some((key) =>
+          excludeColumns.includes(key)
+            ? false
+            : item[key].toString().toLocaleUpperCase().includes(Value)
+        );
+      });
+      setSearchResults(filteredData);
+    }
+  };
+
   return (
     <>
       <Zoom bottom>
@@ -170,9 +203,7 @@ function Details() {
                       <h1 className="">{movies.code}</h1>
                       {movies.series && (
                         <div
-                          onClick={() =>
-                            filterCategory(movies.series, "series")
-                          }
+                          onClick={() => filterData(movies.series, "series")}
                           className={`flex items-center justify-center p-2  rounded-2xl w-full cursor-pointer
                           ${
                             activeSeries && "bg-gray-500 text-white font-bold"
@@ -191,7 +222,7 @@ function Details() {
                     ${
                       value == activeName && "bg-gray-500 text-white font-bold"
                     }`}
-                            onClick={() => filterCategory(value, "name")}
+                            onClick={() => filterData(value, "name")}
                           >
                             {value}
                           </div>
@@ -207,7 +238,7 @@ function Details() {
                       value == activeKeyword &&
                       "bg-gray-500 text-white font-bold"
                     }`}
-                            onClick={() => filterCategory(value, "keywords")}
+                            onClick={() => filterData(value, "keywords")}
                           >
                             {value}
                           </div>
