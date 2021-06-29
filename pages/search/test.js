@@ -22,9 +22,9 @@ function Details() {
   const movies = useSelector(selectDetail);
   const all_movie = useSelector(selectMovie);
   const filterMovie = useSelector(selectFilter);
-  const [activeName, setActiveName] = useState("");
+  const [activeName, setActiveName] = useState("all");
   const [activeKeyword, setActiveKeyword] = useState("all");
-  const [activeSeries, setActiveSeries] = useState("");
+  const [activeSeries, setActiveSeries] = useState("all");
   const [lastChange, setLastChange] = useState(null);
 
   const [searchResults, setSearchResults] = useState([]);
@@ -59,13 +59,10 @@ function Details() {
     }
     if (item === "series") {
       setActiveSeries(value);
-      setActiveKeyword("");
-      setActiveName("");
     }
     if (item === "name") {
       setActiveName(value);
-      setActiveKeyword("");
-      setActiveSeries("");
+
       //setLastChange("name");
       const filtered =
         value !== "all"
@@ -75,8 +72,7 @@ function Details() {
     }
     if (item === "keywords") {
       setActiveKeyword(value);
-      setActiveName("");
-      setActiveSeries("");
+
       //setLastChange("colors");
       const filtered =
         value !== "all"
