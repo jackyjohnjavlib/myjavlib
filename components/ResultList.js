@@ -55,7 +55,7 @@ function ResultList({
               </div>
 
               <div className="space-x-4  my-1 grid grid-flow-row-dense grid-cols-3 xl:grid-cols-4">
-                {name.map((name) => (
+                {name.slice(0, 4).map((name) => (
                   <div>
                     <h1 className="">{name}</h1>
                   </div>
