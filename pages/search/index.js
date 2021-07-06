@@ -203,7 +203,7 @@ function index({ movies }) {
            `}
             value={searchTerm}
             onChange={(e) => handleChange(e.target.value)}
-            placeholder="Search by Actress"
+            placeholder="Search by Movie"
           />
         </div>
       </div>

@@ -16,9 +16,20 @@ import { useState, useEffect } from "react";
 import { getUniqueValues } from "../../utils/helpers";
 import SuggestList from "../../components/SuggestList";
 import Zoom from "react-reveal/Zoom";
+import {
+  selectGrid2,
+  selectGrid3,
+  selectGrid5,
+  selectInitialgrid,
+  resetGrid,
+} from "../../features/gridSlice";
 
 function Details() {
   const dispatch = useDispatch();
+  const initial = useSelector(selectInitialgrid);
+  const grid2 = useSelector(selectGrid2);
+  const grid3 = useSelector(selectGrid3);
+  const grid5 = useSelector(selectGrid5);
   const movies = useSelector(selectDetail);
   const all_movie = useSelector(selectMovie);
   const dataList = all_movie;
@@ -33,6 +44,10 @@ function Details() {
   const [searchTerm, setSearchTerm] = useState(movies.name[0]);
   const [showSuggest, setShowSuggest] = useState(true);
   const excludeColumns = ["id", "title"];
+
+  useEffect(() => {
+    dispatch(resetGrid());
+  }, []);
   const [select, setSelect] = useState(false);
 
   const getUniqueName = () => {
@@ -252,7 +267,15 @@ function Details() {
               <h1 className=" text-center text-2xl lg:text-4xl font-medium">
                 Suggest Movie
               </h1>
-              <div className="px-5 my-10 grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 ">
+              <div
+                className={`px-5 my-10 grid grid-flow-row-dense 
+      ${initial && "md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"}
+      ${grid2 && "md:grid-cols-2"}    
+      ${grid3 && "md:grid-cols-3"}
+      ${grid5 && "md:grid-cols-5"}
+         
+      `}
+              >
                 {showSuggest && searchResults ? (
                   <>
                     {searchResults.map((collection) => (

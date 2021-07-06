@@ -4,7 +4,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import javlibData from "../config/javlibData.json";
 import BannerItem from "./BannerItem";
 
-function Banner() {
+function Banner({ number }) {
   return (
     <div className="relative">
       <div className="absolute w-full h-10 lg:h-48 bg-gradient-to-t from-gray-900 to-transparent bottom-0 z-20" />
@@ -21,7 +21,7 @@ function Banner() {
       >
         {javlibData
           .sort(() => 0.5 - Math.random())
-          .slice(javlibData, 10)
+          .slice(javlibData, number)
           .map((collection) => (
             <div className=" cursor-pointer">
               <BannerItem

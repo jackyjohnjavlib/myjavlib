@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import Result from "../components/Result";
 import { useDispatch, useSelector } from "react-redux";
 import { addMovie } from "../features/movieSlice";
+import { resetGrid } from "../features/gridSlice";
 import Banner from "../components/Banner";
 
 import javlibData from "../config/javlibData.json";
@@ -14,6 +15,7 @@ export default function Home({ movies }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(resetGrid());
     dispatch(addMovie(movies));
   }, [movies]);
 

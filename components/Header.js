@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchList from "./SearchList";
 import HeaderItems from "./HeaderItems";
 import {
@@ -9,9 +9,20 @@ import {
   HomeIcon,
   SearchIcon,
   GiftIcon,
+  ViewGridIcon,
 } from "@heroicons/react/outline";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectMovie } from "../features/movieSlice";
+import {
+  resetGrid,
+  toggleGrid2,
+  toggleGrid3,
+  toggleGrid5,
+  selectGrid2,
+  selectGrid3,
+  selectGrid5,
+  selectInitialgrid,
+} from "../features/gridSlice";
 
 /*const addfile = (e) => {
   e.preventDefault();
@@ -28,6 +39,12 @@ import { selectMovie } from "../features/movieSlice";
 };*/
 
 function Header() {
+  const dispatch = useDispatch();
+  const [phase, setPhase] = useState("reset");
+  const initial = useSelector(selectInitialgrid);
+  const grid2 = useSelector(selectGrid2);
+  const grid3 = useSelector(selectGrid3);
+  const grid5 = useSelector(selectGrid5);
   const all_movie = useSelector(selectMovie);
   const dataList = all_movie;
   const router = useRouter();
@@ -35,6 +52,25 @@ function Header() {
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const excludeColumns = ["id", "color"];
+
+  const toggrid2 = () => {
+    if (phase === "reset") {
+      setPhase("phase2");
+      dispatch(toggleGrid2(true));
+    }
+    if (phase === "phase2") {
+      setPhase("phase3");
+      dispatch(toggleGrid3(true));
+    }
+    if (phase === "phase3") {
+      setPhase("phase5");
+      dispatch(toggleGrid5(true));
+    }
+    if (phase === "phase5") {
+      setPhase("reset");
+      dispatch(resetGrid());
+    }
+  };
 
   const handleChange = (value) => {
     setSearchTerm(value);
@@ -120,6 +156,18 @@ function Header() {
               title="Random"
               Icon={GiftIcon}
               navtosearch={navtoRandom}
+            />
+          </div>
+          <div onClick={toggrid2} className="hidden lg:flex cursor-pointer">
+            <HeaderItems
+              title={`${
+                (initial && `Grid`) ||
+                (grid2 && "Grid2") ||
+                (grid3 && "Grid3") ||
+                (grid5 && "Grid5")
+              }`}
+              Icon={ViewGridIcon}
+              selectGrid
             />
           </div>
         </div>

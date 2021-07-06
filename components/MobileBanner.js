@@ -3,7 +3,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import javlibData from "../config/javlibData.json";
 import BannerItem from "./BannerItem";
 
-function MobileBanner() {
+function MobileBanner({ number }) {
   return (
     <div className="h-screen">
       <Carousel
@@ -16,7 +16,7 @@ function MobileBanner() {
       >
         {javlibData
           .sort(() => Math.random() - Math.random())
-          .slice(0, 10)
+          .slice(0, 10 || number)
           .map((collection) => (
             <div className=" cursor-pointer">
               <BannerItem
