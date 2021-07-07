@@ -169,7 +169,8 @@ function mobilerandom({ movies }) {
           </div>
         </div>
 
-        <div className="w-full flex items-center justify-center space-x-10 cursor-pointer overflow-x-scroll scrollbar-hide">
+        <div className="w-full px-10 whitespace-nowrap flex items-center justify-center space-x-10 cursor-pointer overflow-x-scroll scrollbar-hide">
+          <div className="pl-10" />
           <div
             onClick={shuffle1}
             className={`p-2 flex items-center justify-center font-bold tracking-widest  w-8 h-8 bg-gradient-to-l text-white-800 ${
