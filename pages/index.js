@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addMovie } from "../features/movieSlice";
 import { resetGrid } from "../features/gridSlice";
 import Banner from "../components/Banner";
+import Reveal from "react-reveal/Reveal";
 
 import javlibData from "../config/javlibData.json";
 
@@ -29,7 +30,9 @@ export default function Home({ movies }) {
       <Header collections={movies} />
 
       <main className="mx-auto max-w-screen">
-        <Result collections={movies} />
+        <Reveal effect="fadeInUp">
+          <Result collections={movies} />
+        </Reveal>
       </main>
     </div>
   );

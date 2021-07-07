@@ -15,7 +15,7 @@ function Result({ collections }) {
 
   return (
     <div
-      className={`px-5 my-10 grid grid-flow-row-dense 
+      className={`px-5 my-10 grid grid-flow-row-dense
       ${initial && "md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"}
       ${grid2 && "md:grid-cols-2"}    
       ${grid3 && "md:grid-cols-3"}

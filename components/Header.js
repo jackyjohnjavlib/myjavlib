@@ -55,14 +55,14 @@ function Header() {
 
   const toggrid2 = () => {
     if (phase === "reset") {
-      setPhase("phase2");
-      dispatch(toggleGrid2(true));
-    }
-    if (phase === "phase2") {
       setPhase("phase3");
       dispatch(toggleGrid3(true));
     }
     if (phase === "phase3") {
+      setPhase("phase2");
+      dispatch(toggleGrid2(true));
+    }
+    if (phase === "phase2") {
       setPhase("phase5");
       dispatch(toggleGrid5(true));
     }
