@@ -16,7 +16,7 @@ function MobileBanner({ number }) {
       >
         {javlibData
           .sort(() => Math.random() - Math.random())
-          .slice(0, 10 || number)
+          .slice(0, number)
           .map((collection) => (
             <div className=" cursor-pointer">
               <BannerItem

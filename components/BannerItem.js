@@ -21,6 +21,8 @@ function BannerItem({
     );
     router.push(`/details/${id}`);
   };
+
+  console.log(code);
   return (
     <div key={code} className="group relative" onClick={navToDetails}>
       <Image
